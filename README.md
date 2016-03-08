@@ -24,4 +24,7 @@ planned features are:
 .. _distcc: https://distcc.googlecode.com/
 .. _icecream: https://github.com/icecc/icecream
 
-.. vim:se ft=rst :
+Building
+========
+mkdir build && cd ./build
+cmake ../ && make

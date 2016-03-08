@@ -1,0 +1,325 @@
+/* config.h.in.  Generated from configure.in by autoheader.  */
+
+/* CPU, vendor, and operating system */
+#cmakedefine CPU_VENDOR_OS
+
+/* Define to 1 if <netdb.h> defines struct addrinfo */
+#cmakedefine HAVE_ADDRINFO_STRUCT
+
+/* Define to 1 if you have the <arpa/inet.h> header file. */
+#cmakedefine HAVE_ARPA_INET_H
+
+/* Define to 1 if you have the `bzero' function. */
+#cmakedefine HAVE_BZERO
+
+/* Define to 1 if the /dev/streams/xtiso/tcp device exists */
+#cmakedefine HAVE_DEV_STREAMS_XTISO_TCP
+
+/* Define to 1 if the /dev/tcp device exists */
+#cmakedefine HAVE_DEV_TCP
+
+/* Define to 1 if the /dev/xti/tcp device exists */
+#cmakedefine HAVE_DEV_XTI_TCP
+
+/* Define to 1 if you have the <errno.h> header file. */
+#cmakedefine HAVE_ERRNO_H
+
+/* Define to 1 if you have the <fcntl.h> header file. */
+#cmakedefine HAVE_FCNTL_H
+
+/* Define to 1 if you have the `getaddrinfo' function. */
+#cmakedefine HAVE_GETADDRINFO
+
+/* define if getaddrinfo prototype is in <netdb.h> */
+#cmakedefine HAVE_GETADDRINFO_PROTO
+
+/* Define to 1 if you have the `gethostbyname2' function. */
+#cmakedefine HAVE_GETHOSTBYNAME2
+
+/* Define to 1 if you have the `gethostbyname_r' function. */
+#cmakedefine HAVE_GETHOSTBYNAME_R
+
+/* Define to 1 if you have the `gethostname' function. */
+#cmakedefine HAVE_GETHOSTNAME
+
+/* define if gethostname prototype is in <unistd.h> */
+#cmakedefine HAVE_GETHOSTNAME_PROTO
+
+/* Define to 1 if you have the `getnameinfo' function. */
+#cmakedefine HAVE_GETNAMEINFO
+
+/* define if getnameinfo prototype is in <netdb.h> */
+#cmakedefine HAVE_GETNAMEINFO_PROTO
+
+/* define if getrusage prototype is in <sys/resource.h> */
+#cmakedefine HAVE_GETRUSAGE_PROTO
+
+/* Define to 1 if you have the `hstrerror' function. */
+#cmakedefine HAVE_HSTRERROR
+
+/* define if hstrerror prototype is in <netdb.h> */
+#cmakedefine HAVE_HSTRERROR_PROTO
+
+/* Define to 1 if <net/if.h> defines struct if_nameindex */
+#cmakedefine HAVE_IF_NAMEINDEX_STRUCT
+
+/* Define to 1 if you have the `if_nametoindex' function. */
+#cmakedefine HAVE_IF_NAMETOINDEX
+
+/* define if if_nametoindex prototype is in <net/if.h> */
+#cmakedefine HAVE_IF_NAMETOINDEX_PROTO
+
+/* Define to 1 if you have the `inet6_rth_init' function. */
+#cmakedefine HAVE_INET6_RTH_INIT
+
+/* Define to 1 if you have the `inet_aton' function. */
+#cmakedefine HAVE_INET_ATON
+
+/* define if inet_aton prototype is in <arpa/inet.h> */
+#cmakedefine HAVE_INET_ATON_PROTO
+
+/* Define to 1 if you have the `inet_pton' function. */
+#cmakedefine HAVE_INET_PTON
+
+/* define if inet_pton prototype is in <arpa/inet.h> */
+#cmakedefine HAVE_INET_PTON_PROTO
+
+/* Define to 1 if you have the `kevent' function. */
+#cmakedefine HAVE_KEVENT
+
+/* Define to 1 if you have the `kqueue' function. */
+#cmakedefine HAVE_KQUEUE
+
+/* Define to 1 if you have the `nsl' library (-lnsl). */
+#cmakedefine HAVE_LIBNSL
+
+/* Define to 1 if you have the `pthread' library (-lpthread). */
+#cmakedefine HAVE_LIBPTHREAD
+
+/* Define to 1 if you have the `pthreads' library (-lpthreads). */
+#cmakedefine HAVE_LIBPTHREADS
+
+/* Define to 1 if you have the `resolv' library (-lresolv). */
+#cmakedefine HAVE_LIBRESOLV
+
+/* Define to 1 if you have the `xti' library (-lxti). */
+#cmakedefine HAVE_LIBXTI
+
+/* Define to 1 if you have the `mkstemp' function. */
+#cmakedefine HAVE_MKSTEMP
+
+/* define if struct msghdr contains the msg_control member */
+#cmakedefine HAVE_MSGHDR_MSG_CONTROL
+
+/* Define to 1 if you have the <netconfig.h> header file. */
+#cmakedefine HAVE_NETCONFIG_H
+
+/* Define to 1 if you have the <netdb.h> header file. */
+#cmakedefine HAVE_NETDB_H
+
+/* Define to 1 if you have the <netdir.h> header file. */
+#cmakedefine HAVE_NETDIR_H
+
+/* Define to 1 if you have the <netinet/in.h> header file. */
+#cmakedefine HAVE_NETINET_IN_H
+
+/* Define to 1 if you have the <net/if_dl.h> header file. */
+#cmakedefine HAVE_NET_IF_DL_H
+
+/* Define to 1 if you have the `poll' function. */
+#cmakedefine HAVE_POLL
+
+/* Define to 1 if you have the <poll.h> header file. */
+#cmakedefine HAVE_POLL_H
+
+/* Define to 1 if you have the `pselect' function. */
+#cmakedefine HAVE_PSELECT
+
+/* define if pselect prototype is in <sys/stat.h> */
+#cmakedefine HAVE_PSELECT_PROTO
+
+/* Define to 1 if you have the <pthread.h> header file. */
+#cmakedefine HAVE_PTHREAD_H
+
+/* Define to 1 if you have the <signal.h> header file. */
+#cmakedefine HAVE_SIGNAL_H
+
+/* Define to 1 if you have the `snprintf' function. */
+#cmakedefine HAVE_SNPRINTF
+
+/* define if snprintf prototype is in <stdio.h> */
+#cmakedefine HAVE_SNPRINTF_PROTO
+
+/* Define to 1 if <net/if_dl.h> defines struct sockaddr_dl */
+#cmakedefine HAVE_SOCKADDR_DL_STRUCT
+
+/* define if socket address structures have length fields */
+#cmakedefine HAVE_SOCKADDR_SA_LEN
+
+/* Define to 1 if you have the `sockatmark' function. */
+#cmakedefine HAVE_SOCKATMARK
+
+/* define if sockatmark prototype is in <sys/socket.h> */
+#cmakedefine HAVE_SOCKATMARK_PROTO
+
+/* Define to 1 if you have the <stdio.h> header file. */
+#cmakedefine HAVE_STDIO_H
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#cmakedefine HAVE_STDLIB_H
+
+/* Define to 1 if you have the <strings.h> header file. */
+#cmakedefine HAVE_STRINGS_H
+
+/* Define to 1 if you have the <string.h> header file. */
+#cmakedefine HAVE_STRING_H
+
+/* Define to 1 if you have the <stropts.h> header file. */
+#cmakedefine HAVE_STROPTS_H
+
+/* Define to 1 if `ifr_mtu' is member of `struct ifreq'. */
+#cmakedefine HAVE_STRUCT_IFREQ_IFR_MTU
+
+/* Define to 1 if the system has the type `struct sockaddr_storage'. */
+#cmakedefine HAVE_STRUCT_SOCKADDR_STORAGE
+
+/* Define to 1 if you have the <sys/event.h> header file. */
+#cmakedefine HAVE_SYS_EVENT_H
+
+/* Define to 1 if you have the <sys/filio.h> header file. */
+#cmakedefine HAVE_SYS_FILIO_H
+
+/* Define to 1 if you have the <sys/ioctl.h> header file. */
+#cmakedefine HAVE_SYS_IOCTL_H
+
+/* Define to 1 if you have the <sys/param.h> header file. */
+#cmakedefine HAVE_SYS_PARAM_H
+
+/* Define to 1 if you have the <sys/select.h> header file. */
+#cmakedefine HAVE_SYS_SELECT_H
+
+/* Define to 1 if you have the <sys/socket.h> header file. */
+#cmakedefine HAVE_SYS_SOCKET_H
+
+/* Define to 1 if you have the <sys/sockio.h> header file. */
+#cmakedefine HAVE_SYS_SOCKIO_H
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#cmakedefine HAVE_SYS_STAT_H
+
+/* Define to 1 if you have the <sys/sysctl.h> header file. */
+#cmakedefine HAVE_SYS_SYSCTL_H
+
+/* Define to 1 if you have the <sys/time.h> header file. */
+#cmakedefine HAVE_SYS_TIME_H
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#cmakedefine HAVE_SYS_TYPES_H
+
+/* Define to 1 if you have the <sys/uio.h> header file. */
+#cmakedefine HAVE_SYS_UIO_H
+
+/* Define to 1 if you have the <sys/un.h> header file. */
+#cmakedefine HAVE_SYS_UN_H
+
+/* Define to 1 if you have the <sys/wait.h> header file. */
+#cmakedefine HAVE_SYS_WAIT_H
+
+/* Define to 1 if <time.h> or <sys/time.h> defines struct timespec */
+#cmakedefine HAVE_TIMESPEC_STRUCT
+
+/* Define to 1 if you have the <time.h> header file. */
+#cmakedefine HAVE_TIME_H
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#cmakedefine HAVE_UNISTD_H
+
+/* Define to 1 if you have the `vsnprintf' function. */
+#cmakedefine HAVE_VSNPRINTF
+
+/* Define to 1 if you have the <xti.h> header file. */
+#cmakedefine HAVE_XTI_H
+
+/* Define to 1 if you have the <xti_inet.h> header file. */
+#cmakedefine HAVE_XTI_INET_H
+
+/* Define to 1 if the system supports IPv4 */
+#cmakedefine IPV4
+
+/* Define to 1 if the system supports IPv6 */
+#cmakedefine IPV6
+
+/* Define to 1 if the system supports IPv4 */
+#cmakedefine IPv4
+
+/* Define to 1 if the system supports IPv6 */
+#cmakedefine IPv6
+
+/* Define to 1 if the system supports IP Multicast */
+#cmakedefine MCAST
+
+/* Define to the address where bug reports for this package should be sent. */
+#cmakedefine PACKAGE_BUGREPORT
+
+/* Define to the full name of this package. */
+#cmakedefine PACKAGE_NAME
+
+/* Define to the full name and version of this package. */
+#cmakedefine PACKAGE_STRING
+
+/* Define to the one symbol short name of this package. */
+#cmakedefine PACKAGE_TARNAME
+
+/* Define to the version of this package. */
+#cmakedefine PACKAGE_VERSION
+
+/* the size of the sa_family field in a socket address structure */
+#cmakedefine SA_FAMILY_T
+
+/* Define to 1 if you have the ANSI C header files. */
+#cmakedefine STDC_HEADERS
+
+/* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
+#cmakedefine TIME_WITH_SYS_TIME
+
+/* Define to 1 if the system supports UNIX domain sockets */
+#cmakedefine UNIXDOMAIN
+
+/* Define to 1 if the system supports UNIX domain sockets */
+#cmakedefine UNIXdomain
+
+/* 16 bit signed type */
+#cmakedefine int16_t
+
+/* 32 bit signed type */
+#cmakedefine int32_t
+
+/* the type of the sa_family struct member */
+#cmakedefine sa_family_t
+
+/* unsigned integer type of the result of the sizeof operator */
+#cmakedefine size_t
+
+/* a type appropriate for address */
+#cmakedefine socklen_t
+
+/* define to __ss_family if sockaddr_storage has that instead of ss_family */
+#cmakedefine ss_family
+
+/* a signed type appropriate for a count of bytes or an error indication */
+#cmakedefine ssize_t
+
+/* scalar type */
+#cmakedefine t_scalar_t
+
+/* unsigned scalar type */
+#cmakedefine t_uscalar_t
+
+/* 16 bit unsigned type */
+#cmakedefine uint16_t
+
+/* 32 bit unsigned type */
+#cmakedefine uint32_t
+
+/* 8-bit unsigned type */
+#cmakedefine uint8_t
