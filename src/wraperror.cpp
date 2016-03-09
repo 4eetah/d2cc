@@ -1,3 +1,6 @@
+// This is temporary solution for logging,
+// will write another one, propably with C++ streams wrapped in macro
+
 #include	"wrap.h"
 
 #include	<stdarg.h>		/* ANSI C header file */

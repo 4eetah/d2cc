@@ -1,18 +1,15 @@
-#include <iostream>
-#include <string>
-#include <string.h>
 #include "wrap.h"
 
-bool d2cc_parse_command_args(int argc, char** argv);
-bool d2cc_is_source(const char* sfile);
+bool parseCommandArgs(int argc, char** argv);
+bool isSource(const char* sfile);
 
 int main(int argc, char** argv)
 {
-    d2cc_parse_command_args(argc, argv);
+    parseCommandArgs(argc, argv);
     const char* compiler = basename(argv[0]);
 }
 
-bool d2cc_is_source(const char* sfile)
+bool isSource(const char* sfile)
 {
 
     switch (ext[0]) {
@@ -46,7 +43,7 @@ bool d2cc_is_source(const char* sfile)
     }    
 }
 
-bool d2cc_parse_command_args(int argc, char** argv)
+bool parseCommandArgs(int argc, char** argv)
 {
 #ifndef NDEBUG
     std::cout << "gcc argv:\n";

@@ -38,7 +38,7 @@ namespace Unix
     }
 
     void
-    Gettimeofday(struct timeval *tv, void *foo)
+    Gettimeofday(struct timeval *tv, struct timezone *foo)
     {
         if (gettimeofday(tv, foo) == -1)
             err_sys("gettimeofday error");
@@ -76,18 +76,14 @@ namespace Unix
     }
 
     int
-    Mkstemp(char *template)
+    Mkstemp(char *templ)
     {
         int i;
 
-#ifdef HAVE_MKSTEMP
-        if ((i = mkstemp(template)) < 0)
+        if ((i = mkstemp(templ)) < 0)
             err_quit("mkstemp error");
-#else
-        if (mktemp(template) == NULL || template[0] == 0)
-            err_quit("mktemp error");
-        i = Open(template, O_CREAT | O_WRONLY, FILE_MODE);
-#endif
+
+        i = Open(templ, O_CREAT | O_WRONLY, FILE_MODE);
 
         return i;
     }
