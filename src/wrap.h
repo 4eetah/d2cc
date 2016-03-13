@@ -242,8 +242,8 @@ struct unp_in_pktinfo {
 
 typedef	void	Sigfunc(int);	/* for signal handlers */
 
-#define	min(a,b)	((a) < (b) ? (a) : (b))
-#define	max(a,b)	((a) > (b) ? (a) : (b))
+//#define	MIN(a,b)	((a) < (b) ? (a) : (b))
+//#define	MAX(a,b)	((a) > (b) ? (a) : (b))
 
 //#ifndef	HAVE_ADDRINFO_STRUCT
 //# include	"../lib/addrinfo.h"

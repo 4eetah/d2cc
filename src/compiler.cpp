@@ -1,15 +1,6 @@
 #include "wrap.h"
 
-bool parseCommandArgs(int argc, char** argv);
-bool isSource(const char* sfile);
-
-int main(int argc, char** argv)
-{
-    parseCommandArgs(argc, argv);
-    const char* compiler = basename(argv[0]);
-}
-
-bool isSource(const char* sfile)
+static bool isSource(const char* ext)
 {
 
     switch (ext[0]) {
@@ -43,7 +34,7 @@ bool isSource(const char* sfile)
     }    
 }
 
-bool parseCommandArgs(int argc, char** argv)
+static bool parseCommandArgs(int argc, char** argv)
 {
 #ifndef NDEBUG
     std::cout << "gcc argv:\n";
@@ -51,17 +42,19 @@ bool parseCommandArgs(int argc, char** argv)
         std::cout << "argv[" << i << "] : " << argv[i] << std::endl; 
 #endif
 
-    const char *infile = NULL, *outfile = NULL;
-
     char* a;
     bool was_driver = false, was_make_rule = false;
     bool was_opt_c = false;
+    bool was_input_file = false;
+    bool was_output_file = false;
 
     for (int i = 1; i < argc && (a = argv[i]); ++i) {
         if (a[0] == '-') {
             if (!strcmp(a, "-E")) {
-                err_quit("-E call for cpp must be local");
-            } else if (a[1] == "M") {
+                // only preprocessing
+                err_msg("-E call for cpp must be local");
+                return false;
+            } else if (a[1] == 'M') {
                 if (!strcmp(a, "-MD") || !strcmp(a, "-MMD")) {
                     // generates dependencies as a side effect of
                     // the compilation process
@@ -79,29 +72,31 @@ bool parseCommandArgs(int argc, char** argv)
                 was_make_rule = true;
             } else if (!strcmp(a, "-march=native")) {
                 // proceed with local build, just quit for now
-                err_quit("-march=native generates code for local machine, must be local");
+                err_msg("-march=native generates code for local machine, must be local");
+                return false;
             } else if (!strcmp(a, "-mtune=native")) {
                 // proceed with local build, just quit for now
-                err_quit("-mtune=native optimizes for local machine, must be local");
+                err_msg("-mtune=native optimizes for local machine, must be local");
+                return false;
             } else if (!strcmp(a, "-c")) {
                 was_opt_c = true;
             } else if (!strcmp(a, "-o")) {
-                if (outfile) err_quit("got more than one output file\n");
-                outfile = argv[++i];
+                if (was_output_file)
+                    err_quit("got more than one output file\n");
+                ++i;
             }
         } else {
-            const char* dot, ext;
-            dot = strrchr('.')
-            if (dot) ext = dot + 1;
-            else err_quit("wrong argument: %s\n", a);
-            if (d2cc_is_source(ext)) {
-                if (infile) {
-                    err_quit("got more than one input file\n");
-                }
-                infile = a;
-            } else {
+            const char *dot, *ext = NULL;
+            dot = strrchr(a, '.');
+            if (dot)
+                ext = dot + 1;
+            else
                 err_quit("wrong argument: %s\n", a);
-            } 
+
+            if (!isSource(ext))
+                err_quit("this doesn't look like source file: %s\n", a);
+
+            was_input_file = true;
         }
     }
 
@@ -109,7 +104,41 @@ bool parseCommandArgs(int argc, char** argv)
     // that compiler was called not to compile, but WHY ? isn't we just want
     // to produce .s and .o files and left it so for the linking stage ?
     
-    if (!infile) err_quit("input file missed\n");
+    if (!was_input_file)
+        err_quit("input file missed\n");
+
+    if (was_make_rule && !was_driver)
+        return false;
     
-    return 0;
+    return true;
+}
+
+static bool runRemotely(int argc, char** argv)
+{
+}
+
+int main(int argc, char** argv)
+{
+    const char* compiler = basename(argv[0]);
+    if      (!strcmp(compiler, "d2cc-gcc"))     compiler = "gcc";
+    else if (!strcmp(compiler, "d2cc-g++"))     compiler = "g++";
+    else if (!strcmp(compiler, "d2cc-clang"))   compiler = "clang";
+    else if (!strcmp(compiler, "d2cc-clang++")) compiler = "clang++";
+    else err_quit(compiler, " isn't supported by d2cc");
+
+    if (parseCommandArgs(argc, argv)) {
+#ifndef NDEBUG
+        err_msg("Running remotely\n");
+#endif
+        if (!runRemotely(argc, argv)) {
+            err_quit("Error running remotely\n");
+        }
+    } else {
+#ifndef NDEBUG
+        err_msg("Not possible to run remotely, run locally instead\n");
+#endif
+        if (!execvp(compiler, &argv[1])) {
+            err_quit("Unable to run ", compiler, " .Exiting...");
+        }
+    }
 }
