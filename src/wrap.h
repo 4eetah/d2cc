@@ -201,6 +201,7 @@ struct unp_in_pktinfo {
 #define	UNIXSTR_PATH	"/tmp/unix.str"	/* Unix domain stream */
 #define	UNIXDG_PATH		"/tmp/unix.dg"	/* Unix domain datagram */
 #define D2CC_SOCK       "/tmp/d2ccd.sock" /* d2cc Unix socket path */
+#define SCHED_SOCK      "/tmp/sched.sock"
 /* $$.ix [LISTENQ]~constant,~definition~of$$ */
 /* $$.ix [MAXLINE]~constant,~definition~of$$ */
 /* $$.ix [BUFFSIZE]~constant,~definition~of$$ */

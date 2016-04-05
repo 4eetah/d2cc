@@ -28,3 +28,5 @@ Building
 ========
 mkdir build && cd ./build
 cmake ../ && make
+
+Just draft version which is intended to be rewritten completely.

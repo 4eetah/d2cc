@@ -4,9 +4,9 @@ static bool isSource(const char* ext)
 {
 
     switch (ext[0]) {
-    case 'i':
-        return !strcmp(ext, "i")
-            || !strcmp(ext, "ii");
+    //case 'i':
+    //    return !strcmp(ext, "i")
+    //        || !strcmp(ext, "ii");
     case 'c':
         return !strcmp(ext, "c")
             || !strcmp(ext, "cc")
@@ -16,13 +16,13 @@ static bool isSource(const char* ext)
             || !strcmp(ext, "c++");
     case 'C':
         return !strcmp(ext, "C");
-    case 'm':
-        return !strcmp(ext,"m")
-            || !strcmp(ext,"mm")
-            || !strcmp(ext,"mi")
-            || !strcmp(ext,"mii");
-    case 'M':
-        return !strcmp(ext, "M");
+    //case 'm':
+    //    return !strcmp(ext,"m")
+    //        || !strcmp(ext,"mm")
+    //        || !strcmp(ext,"mi")
+    //        || !strcmp(ext,"mii");
+    //case 'M':
+    //    return !strcmp(ext, "M");
 //#ifdef ENABLE_REMOTE_ASSEMBLE
 //    case 's':
 //        return !strcmp(ext, "s");
@@ -113,32 +113,112 @@ static bool parseCommandArgs(int argc, char** argv)
     return true;
 }
 
+static void mangle_argv_for_cpp(char* argv[])
+{
+    for (char** it = argv; *it; ++it)
+    {
+        char* argp = *it;
+
+        if (argp[0] == '-' && argp[1] != '\0')
+        {
+            if (argp[1] == 'c' && argp[2] == '\0')
+                argp[1] = 'E'; // change to -E for preprocessing
+            // -o indicates output file
+            else if (argp[1] == 'o')
+            {
+                // force stdout output
+                if (argp[2] != '\0') // inline parameter
+                {
+                    argp[2] = '-';
+                    argp[3] = '\0';
+                }
+                else // split parameter
+                {
+                    argp = *++it;
+                    argp[0] = '-';
+                    argp[1] = '\0';
+                }
+            }
+        }
+    }
+}
+
+static pid_t run_preprocessor(char** argv, int* output_fg)
+{
+    int cpp_pipes[2];
+
+    Unix::Pipe(cpp_pipes[2]);
+    pid_t pid = Unix::Fork();
+
+    if (pid == 0) // subprocess
+    {
+        Unix::Dup2(cpp_pipes[1], 1);
+        Unix::Close(cpp_pipes[0]);
+        Unix::Close(cpp_pipes[1]);
+
+        // since we forked, we can mangle argv in-place
+        mangle_argv_for_cpp(&argv[1]);
+
+#ifndef NDEBUG
+        std::cout << "Mangled argv\n";
+        for (char** it = argv; *it; ++it) {
+            std::cout << *it << std::endl;
+        }
+#endif
+
+        if (execvp(argv[0], argv)) {
+            std::cerr << "d2cc: Unable to spawn preprocessor "
+                << ": " << strerror(errno) << std::endl;
+            exit(1);
+        }
+    }
+
+    Unix::Close(cpp_pipes[1]);
+    *output_fd = cpp_pipes[0];
+
+    return pid;
+}
+
 static bool runRemotely(int argc, char** argv)
 {
+    int output_fd;
+    pid_t cpp_pid = run_preprocessor(argv, &output_fd);
+    if (cpp_pid == -1)
+        return false;
+
+    int ret;
+    if (waitpid(cpp_pid, &ret, 0) == -1)
+    {
+        std::cerr << "d2cc: Unable to reap preprocessor: "
+            << strerror(errno) << std::endl;
+        return false;
+    }
+
+    return false;
 }
 
 int main(int argc, char** argv)
 {
-    const char* compiler = basename(argv[0]);
-    if      (!strcmp(compiler, "d2cc-gcc"))     compiler = "gcc";
-    else if (!strcmp(compiler, "d2cc-g++"))     compiler = "g++";
-    else if (!strcmp(compiler, "d2cc-clang"))   compiler = "clang";
-    else if (!strcmp(compiler, "d2cc-clang++")) compiler = "clang++";
+// assume here that standart compiler is in PATH
+    std::string compiler = basename(argv[0]);
+    if      (compiler == "d2cc-gcc")     compiler = "gcc";
+    else if (compiler == "d2cc-g++")     compiler = "g++";
+    else if (compiler == "d2cc-clang")   compiler = "clang";
+    else if (compiler == "d2cc-clang++") compiler = "clang++";
     else err_quit(compiler, " isn't supported by d2cc");
 
     if (parseCommandArgs(argc, argv)) {
 #ifndef NDEBUG
         err_msg("Running remotely\n");
 #endif
-        if (!runRemotely(argc, argv)) {
-            err_quit("Error running remotely\n");
-        }
-    } else {
+        if (runRemotely(argc, argv)) 
+            return 0;
+    }
 #ifndef NDEBUG
-        err_msg("Not possible to run remotely, run locally instead\n");
+    err_msg("Not possible to run remotely, run locally instead\n");
 #endif
-        if (!execvp(compiler, &argv[1])) {
-            err_quit("Unable to run ", compiler, " .Exiting...");
-        }
+    strcpy(argv[0], compiler.str());
+    if (!execvp(argv[0], argv)) {
+        err_quit("Unable to run locally ", compiler, " .Exiting...");
     }
 }
